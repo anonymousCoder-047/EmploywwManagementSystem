@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>Employees</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#" class="brand-logo" style="padding-left: 15px;">Anfal Hyper Market</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+              <% if( isLoggedin && is_Admin ) { %> 
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/logout">Logout</a></li> 
+                  <li><a href="/dashboard">Dashboard</a></li> 
+                  <li><a href="/users">Users</a></li> 
+                  <li><a href="/registerEMP">New Emp</a></li> 
+              <% } else if( isLoggedin && is_Manager ) { %> 
+                  <li><a href="/logout">Logout</a></li>
+                  <li><a href="/dashboard">Dashboard</a></li>
+              <% } else if( isLoggedin ) { %> 
+                  <li><a href="/">Home</a></li>
+                  <li><a href="/logout">Logout</a></li> 
+                  <li><a href="/dashboard">Dashboard</a></li> 
+              <% } else { %>
+                  <li><a href="/login">Login</a></li>
+              <% } %>
+            </ul>
+        </div>
+    </nav>
+    <div>
+        <h3 style="text-align: center;text-transform: uppercase; padding: 30px;margin-bottom: 35px;">Employee report</h3>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <table class="striped alternate-row" id="emp_data">
+                <thead class="thead-dark">
+                    <tr>
+                        <th hidden>databse_id</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">DOB</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Address</th>
+                        <th scope="col">Blood Group</th>
+                        <th scope="col">PF / CASH</th>
+                        <th scope="col">Modify</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0;i<emp.length; i++) { %>
+                        <tr>
+                            <th id="db_user_id" hidden><%= emp[i]._id %></th>
+                            <th scope="row"><%= i+1 %></th>
+                            <td id="emp_name"><%= emp[i].emp_name %></td>
+                            <td><%= emp[i].emp_phone %></td>
+                            <td><%= emp[i].emp_email %></td>
+                            <td><%= emp[i].emp_dob %></td>
+                            <td><%= emp[i].emp_gender %></td>
+                            <td><%= emp[i].emp_address %></td>
+                            <td><%= emp[i].emp_blood_group %></td>
+                            <td><%= emp[i].emp_pay_method %></td>
+                            <td><a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Edit</a></td>
+                        </tr> 
+                    <% } %>
+                </tbody> 
+            </table>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>Manage User Permissions</h4>
+                    <% for(var i=0;i<usr.length; i++) { %>
+                        <div class="row">
+                            <div class="col s1"></div>
+                            <div class="col s5">
+                                <div class="input-field col s6">
+                                    <input id="emp_name_<%= i+1 %>" type="text" value="<%= usr[i].usr_name %>" data-index-number="<%= usr[i]._id %>" onchange="updateName(this)" class="validate">
+                                    <label for="emp_name">Employee Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label>
+                                        <input type="checkbox" onclick="is_Manager_check(this)" data-index-number="<%= usr[i]._id %>" name="emp_manager" id="emp_is_manager">
+                                        <span>Manager</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col s5">
+                                <div class="input-field col s6">
+                                    <label>
+                                        <input type="checkbox" onclick="make_admin_check(this)" data-index-number="<%= usr[i]._id %>" name="emp_admin" id="emp_admin">
+                                        <span>Admin</span>
+                                    </label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <label>
+                                        <input type="checkbox" onclick="can_add_employee_check(this)" data-index-number="<%= emp[i]._id %>" name="emp_add" id="emp_add">
+                                        <span>Add New Employee</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col s1"></div>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+
+        function updateName(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let name = document.querySelector('[id^='+elt.id+']').value;
+            $.post('/empreport/nameUpdate', { "id": id, "name": name })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function is_Manager_check(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let manager = document.querySelector('[id^='+elt.id+']').checked;
+            $.post('/users/updateUserPermission', { "id": id, "manager": manager })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function make_admin_check(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let admin = document.querySelector('[id^='+elt.id+']').checked;
+            $.post('/users/updateUserPermission', { "id": id, "make_admin": admin })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function can_add_employee_check(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let addNew = document.querySelector('[id^='+elt.id+']').checked;
+            $.post('/users/updateUserPermission', { "id": id, "add_emp": addNew })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+    </script>
+</body>
+</html>

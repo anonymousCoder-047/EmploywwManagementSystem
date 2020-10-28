@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>Emp Attendance</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper black">
+          <a href="#" class="brand-logo" style="padding-left: 15px;">Anfal Hyper Market</a>
+          <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <% if( isLoggedin && is_Admin ) { %> 
+                <li><a href="/">Home</a></li>
+                <li><a href="/logout">Logout</a></li> 
+                <li><a href="/dashboard">Dashboard</a></li> 
+                <li><a href="/users">Users</a></li> 
+                <li><a href="/registerEMP">New Emp</a></li> 
+            <% } else if( isLoggedin && is_Manager ) { %> 
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+            <% } else if( isLoggedin ) { %> 
+                <li><a href="/">Home</a></li>
+                <li><a href="/logout">Logout</a></li> 
+                <li><a href="/dashboard">Dashboard</a></li> 
+            <% } else { %>
+                <li><a href="/login">Login</a></li>
+            <% } %>
+          </ul>
+        </div>
+    </nav>
+    <div>
+        <h3 style="text-align: center;padding-bottom: 50px;">Employee Attendance</h3>
+    </div>
+    <div class="row">
+        <div class="col s2"></div>
+        <div class="col s8">
+            <table>
+                <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Emp Name</th>
+                      <th>Absent</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0;i<attendance.length; i++) { %>
+                        <tr>
+                            <td><%= i+1 %></td>
+                            <td><%= attendance[i].emp_name %></td>
+                            <td><input type="number" id="leave_<%= i+1 %>" data-index-number="<%= attendance[i]._id %>" onchange="attendance(this)" step="0.1" oninput="validity.valid||(value='');"></td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col s2"></div>
+    </div>
+    <script>
+        function attendance(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let leaves = parseFloat(document.querySelector('[id^='+elt.id+']').value);
+
+            $.post('/attendance', { "id": id, "leaves": leaves })
+            M.toast({ html : "Updated Successfully"})
+
+        }
+    </script>
+</body>
+</html> 

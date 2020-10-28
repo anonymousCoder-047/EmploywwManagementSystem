@@ -1,0 +1,59 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.login-image {
+    width: calc(100vw - 50%);
+    height: 100vh;
+    position: fixed;
+}
+
+.login-image > img {
+    max-width: 100%;
+    height: 100vh;
+}
+
+.login-form {
+    background-color: #F5FBEF;
+    height: 100vh;
+}
+
+.form {
+    margin-left: 20%;
+}
+
+.usr-profile {
+    width: 100%;
+    height: calc(30vh - 2%);
+    margin-top: 15px;
+}
+
+.usr-image-l {
+    width: 95px;
+    height: calc(16vh - 2%);
+}
+
+.usr-image-l img {
+    max-width: 100%;
+    border-radius: 55px;
+    margin-left: 205px;
+    background-color: #F9F4F5;
+}
+
+.usr-name-l > p { 
+    margin-left: 100px;
+    color: black;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+.login-option {
+    margin-left: 85px;
+    margin-top: 15px;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>Signup</title>
+</head>
+<body>
+    <div class="login-image">
+        <img src="/public/assets/background.jpg" alt="login_image">
+    </div>
+    <div class="login-form">
+        <div class="row">
+            <div class="col s6"></div>
+            <div class="col s4">
+                <div class="usr-profile">
+                    <div class="usr-image-l">
+                        <img src="/public/assets/user.png" alt="user_image">
+                    </div>
+                    <div class="usr-name-l">
+                        <p>Anonymous</p>
+                    </div>
+                </div>
+                <script>
+                    let message = <%=message %>;
+                    let msg = '<%= msg %>';
+                    if(message) {
+                        M.toast({ html: `${msg}` })
+                    }
+                </script>
+                <form class="form" method="POST" action="/signup">
+                    <label for="name">Name</label>
+                    <input id="name" name="name" type="text" required>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" class="validate" required>
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" class="validate" required>
+                    <button class="btn waves-effect waves-light" style="margin-top: 25px;" type="submit" name="action">Submit
+                    </button>
+                </form>
+                <p class="login-option">
+                    <a href="#" style="text-decoration: none;color: black;cursor: default;">Already have account?</a> |
+                    <a href="/login">login</a>
+                </p>
+            </div>
+            <div class="col s2"></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>Register Emp</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="usr-profile">
+            <div class="usr-image">
+                <img src="/public/assets/user.png" alt="user_image">
+            </div>
+            <div class="usr-name">
+                <p>Anonymous</p>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="menu-items">
+                    <% if( is_Admin === 'true' ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">Dashboard</a> 
+                        <a href="/attendance">Attendance</a> 
+                        <a href="/users">Users</a> 
+                    <% } else if( is_Manager === 'true' ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">Dashboard</a> 
+                        <a href="/attendance">Attendance</a> 
+                    <% } else if( isLoggedin ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">Dashboard</a> 
+                    <% } else { %>
+                        <a href="/login">Login</a>
+                    <% } %>
+                </li>
+            </ul>
+        </div>
+        <div class="copyright-txt">
+            <p>&copy; 2020 All Rights Reserved By <a id="copyright" href="https://codendebug.co">Code N Debug</a></p>
+        </div>
+    </div>
+    <form method="post" action="/registerEmp" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col s12">
+                <div>
+                    <h3 style="text-align: center;padding-bottom: 50px;text-transform: uppercase;letter-spacing: 0.8px;margin-left: 255px;">Employee Register</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="width: calc(100vw - 10%); margin-left: 10%;">
+            <div class="col s2"></div>
+                <div class="col s5">
+                    <div class="input-field col s6">
+                        <label for="id">EMP ID</label>
+                        <input type="number" name="emp_id" id="emp_id" required>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="account no">Account No</label>
+                        <input type="number" name="emp_acct" id="emp_acct" oninput="validity.valid||(value='');" required>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="name">Name</label>
+                        <input type="text" name="emp_name" id="emp_name" required>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="phone">Phone</label>
+                        <input type="number" name="emp_phone" oninput="validity.valid||(value='');" id="emp_phone">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="email">Email</label>
+                        <input type="email" name="emp_email" id="emp_email" required>
+                    </div>
+                    <div class="input-field col s6">
+                        <select name="emp_gender" id="emp_gender">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="female">Female</option>
+                            <option value="male">Male</option>
+                        </select>
+                        <label>Gender</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="date">DOB</label>
+                        <input type="date" name="emp_dob" id="emp_dob">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="date">JOIN DATE</label>
+                        <input type="date" name="emp_join_date" id="emp_join_date">
+                    </div>
+                    <div class="input-field col s6" id="pf">
+                        <label for="pf">Provident Fund %</label>
+                        <input type="number" name="emp_pf_per" id="emp_pf_per" oninput="validity.valid||(value='');" value="12" required min="0" step="0.01">
+                    </div>
+                    <div class="input-field col s6" id="esic">
+                        <label for="esic">ESIC %</label>
+                        <input type="number" name="emp_esic_per" id="emp_esic_per" oninput="validity.valid||(value='');" value="0.75" required min="0" step="0.01">
+                    </div>
+                    <div class="input-field col s6" id="pt_amt">
+                        <span>Professional Tax </span>
+                        <p><i class="fa fa-inr"></i> <span id="pt">200</span></p>
+                    </div>
+                    <button class="btn waves-effect waves-light red" type="submit" name="action">Submit
+                        <i class="material-icons right">send</i>
+                    </button>
+                </div>
+                <div class="col s4">
+                    <div class="input-field col s6">
+                        <label for="blood group">Blood Group</label>
+                        <input type="text" name="emp_blood_group" id="emp_blood_group">
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="address">Address</label>
+                        <input type="text" name="emp_address" id="emp_address">
+                    </div>
+                    <div class="input-field col s6">
+                        <select name="emp_counter" id="emp_counter">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="bakery">Bakery</option>
+                            <option value="cashier">Cashier</option>
+                            <option value="inventory">Inventory</option>
+                            <option value="vegetable">Vegetable</option>
+                            <option value="plastic">Plastic</option>
+                            <option value="grocery">Grocery</option>
+                            <option value="soap">Soap</option>
+                            <option value="sauce">Sauce</option>
+                            <option value="maggie">Maggie</option>
+                            <option value="cosmetic">Cosmetic</option>
+                        </select>
+                        <label>Counter</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <select name="emp_job_role" id="emp_job_role">
+                            <option value="" disabled selected>Choose your option</option>
+                            <option value="sales">Sales</option>
+                            <option value="inventory">Inventory</option>
+                            <option value="cashier">Cashier</option>
+                            <option value="sweaper">Sweaper</option>
+                            <option value="watchman">Watchman</option>
+                            <option value="security">Security</option>
+                            <option value="hamali">Hamali</option>
+                        </select>
+                        <label>Job Role</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <label for="salary">Basic Salary</label>
+                        <i class="fa fa-inr" aria-hidden="true" style="padding-right: 20px;"></i>
+                        <input style="width: 80%;" type="number" name="emp_salary" onchange="salary()"
+                        id="emp_salary" oninput="validity.valid||(value='');" step="0.01" required>
+                    </div>
+                    <label for="payment method"> Select Payment Method </label>
+                    <div style="padding-top: 10px;padding-bottom: 10px;">
+                        <label>
+                            <input type="checkbox" onchange="cash_check()" name="emp_cash" id="emp_cash">
+                            <span>Cash</span>
+                        </label>
+                        <span style="padding: 30px">OR</span>
+                        <label>
+                            <input type="checkbox" onchange="pf_check()" name="emp_pf" id="emp_pf">
+                            <span>PF</span>
+                        </label>
+                    </div>
+                    <label for="profile picture"> Choose Profile Picture </label>
+                    <div class="file-field input-field">
+                        <div class="btn red">
+                            <span>FILE</span>
+                            <input type="file" name="emp_picture" multiple id="emp_picture" required>
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
+                </div>
+            <div class="col s1"></div>
+        </div>
+    </form>  
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+
+        pfa = document.getElementById('pf');
+        esic = document.getElementById('esic');
+        pt = document.getElementById('pt_amt');
+
+        pfa.hidden = true;
+        esic.hidden = true;
+        pt.hidden = true;
+
+        function cash_check() {
+            c = document.getElementById('emp_cash');
+
+            if( c.checked === true ) {
+                document.getElementById('emp_pf').disabled = true;
+                pfa.hidden = true;
+                esic.hidden = true;
+
+            } else if( c.checked === false ) {
+                document.getElementById('emp_pf').disabled = false;
+            } 
+        }
+
+        function pf_check() {
+            pf = document.getElementById('emp_pf');
+
+            if( pf.checked === true ) {
+                document.getElementById('emp_cash').disabled = true;
+                pfa.hidden = false;
+                esic.hidden = false;
+                
+            }  else if( pf.checked === false ) {
+                document.getElementById('emp_cash').disabled = false;
+                pfa.hidden = true;
+                esic.hidden = true;
+            }
+        }
+
+        function salary() {
+            basic_salary = parseFloat(document.getElementById('emp_salary').value);
+            pt = document.getElementById('pt_amt');
+
+            if( basic_salary > 15000 ) {
+                pt.hidden = false;
+            } else {
+                pt.hidden = true;
+            }
+        }
+
+        $(document).ready(function() {
+            $('form').on('submit', function() {
+                M.toast({ html: 'Registered Succssfully'});
+            });
+        });
+
+    </script>
+</body>
+</html> 

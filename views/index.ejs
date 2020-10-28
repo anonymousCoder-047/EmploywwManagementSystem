@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>Hello world</title>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="usr-profile">
+            <div class="usr-image">
+                <img src="/public/assets/user.png" alt="user_image">
+            </div>
+            <div class="usr-name">
+                <p><%= user_name %></p>
+            </div>
+        </div>
+        <div class="sidebar-menu">
+            <ul class="menu">
+                <li class="menu-items">
+                    <% if( is_Admin === 'true' ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">PF Report</a> 
+                        <a href="/cashReport">Cash Report</a> 
+                        <a href="/attendance">Attendance</a> 
+                        <a href="/users">Users</a> 
+                        <a href="/registerEMP">New Emp</a> 
+                    <% } else if( is_Manager === 'true' ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">Dashboard</a> 
+                        <a href="/attendance">Attendance</a> 
+                    <% } else if( isLoggedin ) { %> 
+                        <a href="/">Home</a>
+                        <a href="/logout">Logout</a> 
+                        <a href="/dashboard">Dashboard</a> 
+                    <% } else { %>
+                        <a href="/login">Login</a>
+                    <% } %>
+                </li>
+            </ul>
+        </div>
+        <div class="copyright-txt">
+            <p>&copy; 2020 All Rights Reserved By <a id="copyright" href="https://codendebug.co">Code N Debug</a></p>
+        </div>
+    </div>
+    <div class="container">
+        <div class="graph-content">
+            <div id="container" style="width: 100%;margin-left: 155px;">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+        <div class="sales-stats">
+            <div class="row">
+                <div class="col s6">
+                    <table style="margin-left: 85px;">
+                        <thead>
+                          <tr>
+                              <th>Item Code</th>
+                              <th>Item Name</th>
+                              <th>Item Price</th>
+                          </tr>
+                        </thead>
+                
+                        <tbody>
+                          <tr>
+                            <td>0012478</td>
+                            <td>Eclair</td>
+                            <td>$0.87</td>
+                          </tr>
+                          <tr>
+                            <td>0012258</td>
+                            <td>Jellybean</td>
+                            <td>$3.76</td>
+                          </tr>
+                          <tr>
+                            <td>0012147</td>
+                            <td>Lollipop</td>
+                            <td>$7.00</td>
+                          </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col s6">
+                    <div id="container" style="width: 100%;margin-left: 155px;">
+                        <canvas id="salesChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="analysis-data">
+            <div class="col s12">
+                <table class="striped" style="margin-left: 85px;">
+                    <thead>
+                      <tr>
+                          <th>Item Code</th>
+                          <th>Item Name</th>
+                          <th>Item Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>0012478</td>
+                        <td>Eclair</td>
+                        <td>$0.87</td>
+                      </tr>
+                      <tr>
+                        <td>0012258</td>
+                        <td>Jellybean</td>
+                        <td>$3.76</td>
+                      </tr>
+                      <tr>
+                        <td>0012147</td>
+                        <td>Lollipop</td>
+                        <td>$7.00</td>
+                      </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)",
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)",
+                        }
+                    }]
+                },
+                title: {
+                    display: true,
+                    text: 'Monthly Sales'
+                }
+            }
+        });
+    </script>
+    <script>
+        var ctx = document.getElementById('salesChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                datasets: [{
+                    label: '# of Votes',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    xAxes: [{
+                        ticks: {
+                            display: false
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)",
+                            display: false
+                        }
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            display: false
+                        },
+                        gridLines: {
+                            color: "rgba(0, 0, 0, 0)",
+                            display: false
+                        }
+                    }]
+                },
+                legend: {
+                    display: false
+                },
+                title: {
+                    display: true,
+                    text: 'Top Product Sales'
+                }
+            }
+        });
+    </script>
+</body>
+</html>

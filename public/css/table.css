@@ -1,0 +1,9 @@
+ 
+thead.thead-dark {
+    background-color: black !important;
+    color: white;
+}
+
+.alternate-row tr:nth-child(even){
+    background: #FFF07C;
+}

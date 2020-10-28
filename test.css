@@ -1,0 +1,12 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.jumbotron {
+    font-size: 25px;
+    background-size: cover;
+    background-clip: border-box;
+    background: linear-gradient(to right, rgba(255,0,0,0.3), rgba(152,35,0,0.3)), url('../public/image-4.jpg');
+}

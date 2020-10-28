@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    width: 3px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFF;
+  }
+
+::-webkit-scrollbar-thumb {
+    background: #2D3047;
+}
+
+  
+.sidebar {
+    background-color: #2D3047;
+    width: calc(100vw - 78%);
+    height: 100vh;
+    position: fixed;
+}
+
+.usr-profile {
+    width: 100%;
+    height: calc(30vh - 2%);
+}
+
+.usr-image {
+    width: 95px;
+    height: calc(16vh - 2%);
+}
+
+.usr-image img {
+    max-width: 100%;
+    border-radius: 55px;
+    margin-left: 105px;
+    margin-top: 25px;
+    background-color: #F9F4F5;
+}
+
+.usr-name > p {
+    margin-top: 30px;
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-family: sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+}
+
+.sidebar-menu {
+    height: calc(100vh - 45%);
+}
+
+.menu {
+    font-size: 16px;
+    font-family: sans-serif;
+    font-weight: 300;
+    list-style: none;
+}
+
+.menu-items > a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding: 20px;
+    text-transform: uppercase;
+    padding-left: 35px;
+    cursor: pointer;
+}
+
+.menu-items > a:hover {
+    border-left: 8px solid #ED4D6E;
+    background-color: #F9F4F5;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 1px 2px 2px #555;
+    color: black;
+}
+
+.menu-items > a:active {
+    border-left: 8px solid #ED4D6E;
+    background-color: #ED4D6E;
+    transform: translateY(2px);
+    color: black;
+}
+
+.menu-items > a:nth-child(1) {
+    background-color: #ED4D6E;
+}
+
+.menu-items > a:nth-child(1):hover {
+    background-color: #F9F4F5;
+    color: black;
+}
+
+.menu-items > a:nth-child(1):active {
+    background-color: #ED4D6E;
+    color: black;
+}
+
+.copyright-txt {
+    padding: 15px;
+    margin-top: 65px;
+    color: white;
+    font-size: 10px;
+    font-weight: 200;
+    font-family: sans-serif;
+    text-align: center;
+}
+
+.copyright-txt > p > a {
+    text-decoration: none;
+    color: #ED4D6E;
+}
+
+.container {
+    width: calc(100vw - 32%);
+    height: 100%;
+}
+
+.graph-content {
+    color: black;
+    padding: 107px;
+}
+
+.sales-stats {
+    color: black;
+    padding: 107px;
+}
+
+.analysis-data {
+    color: black;
+    padding: 105.6px;
+}

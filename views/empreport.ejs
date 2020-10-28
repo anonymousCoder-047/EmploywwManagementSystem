@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('partials/headers') %>
+    <title>PF Report</title>
+</head>
+<body>
+    <nav>
+        <div class="nav-wrapper black">
+            <a href="#" class="brand-logo" style="padding-left: 15px;">Anfal Hyper Market</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <% if( isLoggedin && is_Admin ) { %> 
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/logout">Logout</a></li> 
+                    <li><a href="/dashboard">Dashboard</a></li> 
+                    <li><a href="/users">Users</a></li> 
+                    <li><a href="/registerEMP">New Emp</a></li> 
+                <% } else if( isLoggedin && is_Manager ) { %> 
+                    <li><a href="/logout">Logout</a></li>
+                    <li><a href="/dashboard">Dashboard</a></li>
+                <% } else if( isLoggedin ) { %> 
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/logout">Logout</a></li> 
+                    <li><a href="/dashboard">Dashboard</a></li> 
+                <% } else { %>
+                    <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+          </div>
+    </nav>
+    <div>
+        <h3 style="text-align: center;text-transform: uppercase; padding: 30px;margin-bottom: 35px;">Employee PF Report</h3>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <table class="striped alternate-row" id="emp_data">
+                <thead class="thead-dark">
+                    <tr>
+                        <th hidden>databse_id</th>
+                        <th scope="col">#</th>
+                        <th scope="col">Account No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Salary</th>
+                        <th scope="col">Incentive</th>
+                        <th scope="col">Gr Total</th>
+                        <th scope="col">Present</th>
+                        <th scope="col">Gr Value</th>
+                        <th scope="col">Advance</th>
+                        <th scope="col">PF</th>
+                        <th scope="col">After PF</th>
+                        <th scope="col">ESIC</th>
+                        <th scope="col">Gr Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% for(var i=0;i<emp.length; i++) { %>
+                        <tr>
+                            <th id="db_user_id" hidden><%= emp[i]._id %></th>
+                            <th scope="row"><%= i+1 %></th>
+                            <td><%= emp[i].emp_acct %></td>
+                            <td id="emp_name"><%= emp[i].emp_name %></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_salary %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_incentive %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_gr_amt %></span></td>
+                            <td><span><%= emp[i].emp_absent %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_gr_value %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_advance %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_pf_amt %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_gr_total %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_esi_amt %></span></td>
+                            <td><i class="fa fa-inr" aria-hidden="true"></i> <span><%= emp[i].emp_gr_total %></span></td>
+                            <td><a class="waves-effect waves-light btn modal-trigger blue" href="#modal1">Edit</a></td>
+                        </tr> 
+                    <% } %>
+                </tbody>
+            </table>
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>Update Report</h4>
+                    <% for(var i=0;i<emp.length; i++) { %>
+                        <div class="row">
+                            <div class="col s1"></div>
+                            <div class="col s5">
+                                <div class="input-field col s6">
+                                    <input id="emp_name_<%= i+1 %>" type="text" value="<%= emp[i].emp_name %>" data-index-number="<%= emp[i]._id %>" onchange="updateName(this)" class="validate">
+                                    <label for="emp_name">Employee Name</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="fa fa-inr"></i> <input style="width: 80%;" id="emp_salary_<%= i+1 %>" type="number" value="<%= emp[i].emp_salary %>" data-index-number="<%= emp[i]._id %>" onchange="updateSalary(this)" step="0" min="0" oninput="validity.valid||(value='');" class="validate">
+                                    <label for="emp_salary">Employee Salary</label>
+                                </div>
+                            </div>
+                            <div class="col s5">
+                                <div class="input-field col s6">
+                                    <input id="emp_leaves_<%= i+1 %>" type="number" value="<%= emp[i].emp_absent %>" step="0.1" min="0" data-index-number="<%= emp[i]._id %>" onchange="updateLeaves(this)" oninput="validity.valid||(value='');" class="validate">
+                                    <label for="emp_leaves">Present</label>
+                                </div>
+                                <div class="input-field col s6">
+                                    <i class="fa fa-inr"></i> <input style="width: 80%;" id="emp_advance_<%= i+1 %>" type="number" value="0" step="0" min="0" data-index-number="<%= emp[i]._id %>" onchange="updateAdvance(this)" oninput="validity.valid||(value='');" class="validate">
+                                    <label for="emp_advance_salary">Advance Salary</label>
+                                </div>
+                            </div>
+                            <div class="col s1"></div>
+                        </div>
+                    <% } %>
+                </div>
+                <div class="modal-footer">
+                  <a href="#!" class="modal-close waves-effect waves-green btn-flat">Close</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.modal');
+            var instances = M.Modal.init(elems);
+        });
+
+        function updateName(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let name = document.querySelector('[id^='+elt.id+']').value;
+            $.post('/empreport/nameUpdate', { "id": id, "name": name })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function updateSalary(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let salary = document.querySelector('[id^='+elt.id+']').value;
+            $.post('/empreport/salaryUpdate', { "id": id, "salary": salary })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function updateLeaves(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let leaves = document.querySelector('[id^='+elt.id+']').value;
+            $.post('/empreport/leavesUpdate', { "id": id, "leaves": leaves })
+            M.toast({ html : "Updated Successfully"})
+        }
+
+        function updateAdvance(elt) {
+            let id = document.querySelector('[id^='+elt.id+']').dataset.indexNumber;
+            let advance = document.querySelector('[id^='+elt.id+']').value;
+            $.post('/empreport/advanceUpdate', { "id": id, "advance": advance })
+            M.toast({ html : "Updated Successfully"})
+        }
+    </script>
+</body>
+</html>
